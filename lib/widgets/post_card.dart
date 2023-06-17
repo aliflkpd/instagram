@@ -255,7 +255,7 @@ class _PostCardState extends State<PostCard> {
                       style: const TextStyle(color: primaryColor),
                       children: [
                         TextSpan(
-                          text: 'username',
+                          text: widget.snap['username'],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

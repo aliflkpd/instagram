@@ -28,7 +28,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -54,9 +53,14 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
           return ListView.builder(
             itemCount: (snapshot.data! as dynamic).docs.length,
-            itemBuilder: (context, index) => CommentCard(
-              snap: (snapshot.data! as dynamic).docs[index].data(),
-            ),
+            itemBuilder: (context, index) {
+              var commentData = (snapshot.data! as dynamic).docs[index].data();
+              if (commentData != null) {
+                return CommentCard(snap: commentData);
+              } else {
+                return SizedBox();
+              }
+            },
           );
         },
       ),

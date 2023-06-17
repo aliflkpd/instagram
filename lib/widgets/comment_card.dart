@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../models/user.dart';
+import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
+import 'like_animation.dart';
 
 class CommentCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   CommentCard({
     Key? key,
     required this.snap,
@@ -13,8 +19,12 @@ class CommentCard extends StatefulWidget {
 }
 
 class _CommentCardState extends State<CommentCard> {
+  bool isLikeAnimating = false;
+
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
+    final List<dynamic>? likes = widget.snap['likes'];
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 18,
@@ -68,11 +78,25 @@ class _CommentCardState extends State<CommentCard> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: const Icon(
-              Icons.favorite,
-              size: 16,
+          LikeAnimation(
+            isAnimating: likes != null && likes.contains(user.uid),
+            smallLike: true,
+            child: IconButton(
+              onPressed: () async {
+                await FirestoreMethods().likePost(
+                  widget.snap['postId'],
+                  user.uid,
+                  widget.snap['likes'],
+                );
+              },
+              icon: likes != null && likes.contains(user.uid)
+                  ? const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    )
+                  : const Icon(
+                      Icons.favorite_border,
+                    ),
             ),
           ),
         ],

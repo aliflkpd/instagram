@@ -89,8 +89,15 @@ class _SearchScreenState extends State<SearchScreen> {
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 3,
                   itemCount: (snapshot.data! as dynamic).docs.length,
-                  itemBuilder: (context, index) => Image.network(
-                    (snapshot.data! as dynamic).docs[index]['postUrl'],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProfileScreen(
+                        uid: (snapshot.data! as dynamic).docs[index]['uid'],
+                      ),
+                    )),
+                    child: Image.network(
+                      (snapshot.data! as dynamic).docs[index]['postUrl'],
+                    ),
                   ),
                   staggeredTileBuilder: (index) => StaggeredTile.count(
                     (index % 7 == 0) ? 2 : 1,

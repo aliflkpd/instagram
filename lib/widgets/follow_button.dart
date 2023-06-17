@@ -5,26 +5,38 @@ class FollowButton extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final String text;
-  const FollowButton({Key? key}) : super(key: key);
+  final Color texcolor;
+  const FollowButton(
+      {Key? key,
+      required this.backgroundColor,
+      required this.borderColor,
+      required this.text,
+      required this.texcolor,
+      this.function})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 2),
       child: TextButton(
         onPressed: function,
         child: Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              border: Border.all(
-                color: borderColor,
-              ),
-              borderRadius: BorderRadius.circular(5),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border.all(
+              color: borderColor,
             ),
-            alignment: Alignment.center,
-            child: Text(
-              text,
-            )),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: TextStyle(color: texcolor, fontWeight: FontWeight.bold),
+          ),
+          width: 250,
+          height: 27,
+        ),
       ),
     );
   }

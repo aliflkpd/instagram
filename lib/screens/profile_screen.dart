@@ -195,8 +195,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 FutureBuilder(
                     future: FirebaseFirestore.instance
                         .collection('posts')
-                        .orderBy('datePublished', descending: true)
                         .where('uid', isEqualTo: widget.uid)
+                        // .orderBy('datePublished', descending: true)
                         .get(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -204,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: CircularProgressIndicator(),
                         );
                       }
+
                       return GridView.builder(
                           shrinkWrap: true,
                           itemCount: (snapshot.data! as dynamic).docs.length,

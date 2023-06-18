@@ -63,55 +63,65 @@ class FirestoreMethods {
     }
   }
 
-  // Post Comment
-  Future<void> postComment(String postId, String text, String uid, String name,
-      String profilePic) async {
+  Future<void> postComment(
+    String postId,
+    String text,
+    String uid,
+    String name,
+    String profilePic,
+  ) async {
     try {
       if (text.isNotEmpty) {
-        String commentId = const Uuid().v1();
-        _firestore
+        String commentId = Uuid().v1();
+        await _firestore
             .collection('posts')
             .doc(postId)
             .collection('comments')
             .doc(commentId)
-            .set(
-          {
-            'profilePic': profilePic,
-            'name': name,
-            'uid': uid,
-            'text': text,
-            'commentId': commentId,
-            'datePublished': DateTime.now(),
-          },
-        );
+            .set({
+          'profilePic': profilePic,
+          'name': name,
+          'uid': uid,
+          'text': text,
+          'commentId': commentId,
+          'datePublished': DateTime.now(),
+          'likes': [],
+        });
       } else {
         print('Text is empty');
       }
     } catch (e) {
-      print(
-        e.toString(),
-      );
+      print(e.toString());
     }
   }
 
   // Like Comment
   Future<void> likeComment(
-      String postId, String commentId, String uid, List name) async {
+      String postId, String commentId, String uid, List likes) async {
     try {
-      final postRef = _firestore.collection('posts').doc(postId);
-      final commentRef = postRef.collection('comments').doc(commentId);
-
-      if (name.contains(uid)) {
-        await commentRef.update({
+      if (likes.contains(uid)) {
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .update({
           'likes': FieldValue.arrayRemove([uid]),
         });
       } else {
-        await commentRef.update({
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .update({
           'likes': FieldValue.arrayUnion([uid]),
         });
       }
     } catch (e) {
-      print(e.toString());
+      print(
+        e.toString(),
+      );
     }
   }
 

@@ -10,7 +10,10 @@ import '../widgets/comment_card.dart';
 
 class CommentsScreen extends StatefulWidget {
   final snap;
-  const CommentsScreen({Key? key, required this.snap}) : super(key: key);
+  const CommentsScreen({
+    Key? key,
+    required this.snap,
+  }) : super(key: key);
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();
@@ -56,7 +59,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
             itemBuilder: (context, index) {
               var commentData = (snapshot.data! as dynamic).docs[index].data();
               if (commentData != null) {
-                return CommentCard(snap: commentData);
+                return CommentCard(
+                    snap: commentData, postId: widget.snap['postId']);
               } else {
                 return SizedBox();
               }

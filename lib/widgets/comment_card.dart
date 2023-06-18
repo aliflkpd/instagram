@@ -9,9 +9,11 @@ import 'like_animation.dart';
 
 class CommentCard extends StatefulWidget {
   final dynamic snap;
+  final String postId;
   CommentCard({
     Key? key,
     required this.snap,
+    required this.postId,
   }) : super(key: key);
 
   @override
@@ -78,18 +80,18 @@ class _CommentCardState extends State<CommentCard> {
             ),
           ),
           LikeAnimation(
-            isAnimating: widget.snap['uid'].contains(widget.snap['uid']),
+            isAnimating: widget.snap['likes'].contains(user.uid),
             smallLike: true,
             child: IconButton(
               onPressed: () async {
                 await FirestoreMethods().likeComment(
-                  widget.snap['posts'],
-                  widget.snap['comments'],
+                  widget.postId,
+                  widget.snap['commentId'],
                   user.uid,
-                  widget.snap['name'],
+                  widget.snap['likes'],
                 );
               },
-              icon: widget.snap['uid'].contains(widget.snap['uid'])
+              icon: widget.snap['likes'].contains(user.uid)
                   ? const Icon(
                       Icons.favorite,
                       color: Colors.red,

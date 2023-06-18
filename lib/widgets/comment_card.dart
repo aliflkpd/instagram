@@ -24,7 +24,6 @@ class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
-    final List<dynamic>? likes = widget.snap['likes'];
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 18,
@@ -79,17 +78,18 @@ class _CommentCardState extends State<CommentCard> {
             ),
           ),
           LikeAnimation(
-            isAnimating: likes != null && likes.contains(user.uid),
+            isAnimating: widget.snap['uid'].contains(widget.snap['uid']),
             smallLike: true,
             child: IconButton(
               onPressed: () async {
-                await FirestoreMethods().likePost(
-                  widget.snap['postId'],
+                await FirestoreMethods().likeComment(
+                  widget.snap['posts'],
+                  widget.snap['comments'],
                   user.uid,
-                  widget.snap['likes'],
+                  widget.snap['name'],
                 );
               },
-              icon: likes != null && likes.contains(user.uid)
+              icon: widget.snap['uid'].contains(widget.snap['uid'])
                   ? const Icon(
                       Icons.favorite,
                       color: Colors.red,

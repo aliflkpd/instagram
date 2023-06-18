@@ -93,6 +93,28 @@ class FirestoreMethods {
       );
     }
   }
+
+  // Like Comment
+  Future<void> likeComment(
+      String postId, String commentId, String uid, List name) async {
+    try {
+      final postRef = _firestore.collection('posts').doc(postId);
+      final commentRef = postRef.collection('comments').doc(commentId);
+
+      if (name.contains(uid)) {
+        await commentRef.update({
+          'likes': FieldValue.arrayRemove([uid]),
+        });
+      } else {
+        await commentRef.update({
+          'likes': FieldValue.arrayUnion([uid]),
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   // Delete Post
 
   Future<void> deletePost(String postId) async {

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../screens/comments_screen.dart';
+import '../screens/profile_screen.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
@@ -72,18 +73,28 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.snap['username'],
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    padding: const EdgeInsets.only(left: 8),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              uid: widget.snap['uid'],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.snap['username'],
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

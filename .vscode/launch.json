@@ -22,11 +22,5 @@
             "type": "dart",
             "flutterMode": "release"
         },
-        {
-            "name": "launch-web",
-            "request": "launch",
-            "type": "dart",
-            "args": ["-d", "chrome", "--web-port", "4200"]
-        }
     ]
 }

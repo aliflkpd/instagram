@@ -83,6 +83,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 32),
@@ -129,10 +130,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 24,
               ),
               // text field input for username
-              TextFieldInput(
-                hintText: 'Enter your username',
-                textInputType: TextInputType.text,
-                textEditingController: _usernameController,
+              Column(
+                children: [
+                  TextFieldInput(
+                    hintText: 'Enter your username',
+                    textInputType: TextInputType.text,
+                    textEditingController: _usernameController,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 24,

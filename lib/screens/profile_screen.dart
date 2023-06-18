@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 FutureBuilder(
                     future: FirebaseFirestore.instance
                         .collection('posts')
-                        .orderBy('datePublished', descending: true)
+                        // .orderBy('datePublished', descending: true)
                         .where('uid', isEqualTo: widget.uid)
                         .get(),
                     builder: (context, snapshot) {

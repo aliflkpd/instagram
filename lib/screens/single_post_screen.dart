@@ -19,18 +19,16 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
 
     return Scaffold(
       backgroundColor:
-          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
-      appBar: width > webScreenSize
-          ? null
-          : AppBar(
-              backgroundColor: mobileBackgroundColor,
-              centerTitle: false,
-              title: Image.asset(
-                'assets/intens.png',
-                color: primaryColor,
-                height: 20,
-              ),
-            ),
+          width >= webScreenSize ? webBackgroundColor : mobileBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: mobileBackgroundColor,
+        centerTitle: false,
+        title: Image.asset(
+          'assets/intens.png',
+          color: primaryColor,
+          height: 20,
+        ),
+      ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')

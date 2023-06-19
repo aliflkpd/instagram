@@ -95,10 +95,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Container(),
                 flex: 2,
               ), //svg image
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
+              Image.asset(
+                'assets/intens.png',
                 color: primaryColor,
-                height: 64,
+                height: 40,
               ),
               const SizedBox(height: 64),
               // circular widget to accept and show our selected file

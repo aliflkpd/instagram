@@ -26,25 +26,11 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
           : AppBar(
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
-              title: SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 32,
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.messenger_outline,
-                  ),
-                )
-              ],
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')
-            .where('uid',
-                isEqualTo: FirebaseAuth.instance.currentUser!.photoURL)
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .limit(1) // Limit to only one document
             .snapshots(),
         builder: (

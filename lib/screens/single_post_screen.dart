@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:instagram_flutter/utils/colors.dart';
 import 'package:instagram_flutter/utils/global_variables.dart';
 import 'package:instagram_flutter/widgets/post_card.dart';
@@ -26,6 +25,11 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
           : AppBar(
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
+              title: Image.asset(
+                'assets/intens.png',
+                color: primaryColor,
+                height: 20,
+              ),
             ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -47,14 +51,17 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
               child: Text('Post is no longer available'),
             );
           }
-          final post = snapshot.data!.docs[0].data(); // Get the first document
-          return Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: width > webScreenSize ? width * 0.3 : 0,
-              vertical: width > webScreenSize ? 15 : 0,
-            ),
-            child: PostCard(
-              snap: post,
+
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) => Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: width > webScreenSize ? width * 0.3 : 0,
+                vertical: width > webScreenSize ? 15 : 0,
+              ),
+              child: PostCard(
+                snap: snapshot.data!.docs[index].data(),
+              ),
             ),
           );
         },

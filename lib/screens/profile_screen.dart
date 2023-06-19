@@ -195,8 +195,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 FutureBuilder(
                     future: FirebaseFirestore.instance
                         .collection('posts')
-                        .where('uid', isEqualTo: widget.uid)
                         .orderBy('uid', descending: true)
+                        .where('uid', isEqualTo: widget.uid)
                         .get(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }
                       return GridView.builder(
                           shrinkWrap: true,
-                          itemCount: (snapshot.data! as dynamic).docs.length,
+                          itemCount: (snapshot.data as dynamic).docs.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
@@ -215,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   childAspectRatio: 1),
                           itemBuilder: (context, index) {
                             DocumentSnapshot snap =
-                                (snapshot.data! as dynamic).docs[index];
+                                (snapshot.data as dynamic).docs[index];
                             return Container(
                               child: GestureDetector(
                                 onTap: () {

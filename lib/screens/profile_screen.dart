@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_flutter/resources/auth_methods.dart';
 import 'package:instagram_flutter/resources/firestore_methods.dart';
 import 'package:instagram_flutter/screens/login_screen.dart';
+import 'package:instagram_flutter/screens/single_post_screen.dart';
 import 'package:instagram_flutter/utils/colors.dart';
 import 'package:instagram_flutter/utils/utils.dart';
 
@@ -216,10 +217,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             DocumentSnapshot snap =
                                 (snapshot.data! as dynamic).docs[index];
                             return Container(
-                              child: Image(
-                                image: NetworkImage(
-                                    (snap.data()! as dynamic)['postUrl']),
-                                fit: BoxFit.cover,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SinglePostScreen(
+                                        postId: snap.id,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Image(
+                                  image: NetworkImage(
+                                      (snap.data()! as dynamic)['postUrl']),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             );
                           });
